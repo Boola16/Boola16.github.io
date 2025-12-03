@@ -84,6 +84,33 @@
       			display: none !important
     		}
 
+			#clockContainer {
+  				position: fixed;
+  				top: 50%;
+  				left: 50%;
+  				transform: translate(-50%, -80%); /* move slightly upward */
+  				text-align: center;
+  				color: white;
+  				font-family: "DM Sans", sans-serif;
+  				z-index: 50;
+  				user-select: none;
+			}
+
+			#clock {
+  				font-size: 80px;
+  				font-weight: 700;
+  				letter-spacing: 2px;
+  				text-shadow: 0 0 12px rgba(0,0,0,0.8);
+			}
+
+			#date {
+  				font-size: 28px;
+  				margin-top: 8px;
+  				opacity: 0.85;
+  				letter-spacing: 1px;
+  				text-shadow: 0 0 10px rgba(0,0,0,0.6);
+			}
+
 
 		</style>
 	</head>
@@ -163,6 +190,12 @@
   		</div>
 	</form>
 
+	<div id="clockContainer">
+  		<div id="clock"></div>
+  		<div id="date"></div>
+	</div>
+
+
 
 		<script>
 			function doSearch() {
@@ -178,6 +211,35 @@
     			doSearch();
   			}
 			});
+
+			function updateClock() {
+  				const clock = document.getElementById("clock");
+  				const date = document.getElementById("date");
+
+  				const now = new Date();
+
+  				// Time
+  				let hours = now.getHours();
+  				let minutes = now.getMinutes();
+
+  				// Leading zeros
+  				minutes = minutes < 10 ? "0" + minutes : minutes;
+
+  				// Build time string
+  				const timeString = `${hours}:${minutes}`;
+
+  				// Date
+  				const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  				const dateString = now.toLocaleDateString(undefined, options);
+
+  				clock.textContent = timeString;
+  				date.textContent = dateString;
+			}
+
+			// Update every second
+			setInterval(updateClock, 1000);
+			updateClock(); // Initial call
+
 		</script>
 
 
