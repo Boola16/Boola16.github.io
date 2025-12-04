@@ -227,7 +227,7 @@
 		return replies.length ? replies.join("\n") : "Sorry, I don't understand that yet.";
 	}
 
-	function send() {
+function send() {
   const text = inputEl.value.trim();
   if (!text) return;
 
@@ -237,27 +237,22 @@
   const lower = text.toLowerCase();
   const trigger = "make me an image of";
 
-  // Check if the trigger phrase exists anywhere in the message
+  // Handle image command anywhere in sentence
   if (lower.includes(trigger)) {
-    // Extract everything after the trigger phrase
     const prompt = text.substring(lower.indexOf(trigger) + trigger.length).trim();
 
-    if (prompt) {
+    if (prompt.length > 0) {
       addStockImage(prompt);
     } else {
       addMsg("bot", "Please specify what you want an image of.");
     }
-    return;
+    return; // Stop normal replies
   }
 
-  // Otherwise just reply normally
+  // Normal chatbot response
   const reply = getReply(text);
   addMsg("bot", reply);
 }
-
-
-		addMsg("bot", getReply(text));
-	}
 
 	inputEl.addEventListener("keydown", e => { if (e.key === "Enter") send(); });
 	document.getElementById("send").addEventListener("click", send);
