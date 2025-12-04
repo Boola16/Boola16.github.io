@@ -228,19 +228,33 @@
 	}
 
 	function send() {
-		const text = inputEl.value.trim();
-		if (!text) return;
+  const text = inputEl.value.trim();
+  if (!text) return;
 
-		addMsg("user", text);
-		inputEl.value = "";
+  addMsg("user", text);
+  inputEl.value = "";
 
-		const trigger = "make me an image of a";
-		if (text.toLowerCase().startsWith(trigger)) {
-			const prompt = text.slice(trigger.length).trim();
-			if (prompt) addStockImage(prompt);
-			else addMsg("bot", "Please specify what you want an image of.");
-			return;
-		}
+  const lower = text.toLowerCase();
+  const trigger = "make me an image of";
+
+  // Check if the trigger phrase exists anywhere in the message
+  if (lower.includes(trigger)) {
+    // Extract everything after the trigger phrase
+    const prompt = text.substring(lower.indexOf(trigger) + trigger.length).trim();
+
+    if (prompt) {
+      addStockImage(prompt);
+    } else {
+      addMsg("bot", "Please specify what you want an image of.");
+    }
+    return;
+  }
+
+  // Otherwise just reply normally
+  const reply = getReply(text);
+  addMsg("bot", reply);
+}
+
 
 		addMsg("bot", getReply(text));
 	}
