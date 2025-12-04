@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link rel="icon" href="https://art.pixilart.com/sr5zfaad98ce16aws3.png" type="image/x-icon"/>
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Fredoka:wght@300..700&family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -83,10 +84,39 @@
 	  font-family: 'Press start 2p', serif;
     }
 
+	#backButtonContainer {
+  		position: absolute;
+   		top: 20px;
+   		left: 50%;
+   		transform: translateX(-50%);
+   		text-align: center;
+   		width: auto;
+ 	}
+
+ 	#backButton {
+   		background: rgba(255, 255, 255, 0.15);
+   		backdrop-filter: blur(10px);
+   		-webkit-backdrop-filter: blur(10px);
+   		padding: 10px 16px;
+   		border-radius: 12px;
+   		border: 1px solid rgba(255,255,255,0.2);
+   		color: white;
+   		font-family: 'Press Start 2P';
+   		cursor: pointer;
+   		box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+	}
+
+
     button:hover { background: #2563eb; }
   </style>
 </head>
 <body>
+
+<div id="backButtonContainer">
+  <button id="backButton" onclick="window.location.href='index.html'">
+    ← Back to New Tab
+  </button>
+</div>
 
 <div class="chatbox">
   <div class="messages" id="messages"></div>
@@ -95,14 +125,6 @@
     <button id="send">Send</button>
   </div>
 </div>
-
-<div style="text-align: center; margin-top: 8px; top: 30px;">
-  <button onclick="window.location.href='index.html'" 
-          style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: 0 4px 30px rgba(0,0,0,0.3); margin-top:5px; border: 1px solid black; border-radius: 12px;">
-    ← Back to New Tab
-  </button>
-</div>
-
 	
 <script>
   const messagesEl = document.getElementById("messages");
