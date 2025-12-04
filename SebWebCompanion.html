@@ -187,6 +187,11 @@
             img.onload = () => {
                 messagesEl.appendChild(img);
                 messagesEl.scrollTop = messagesEl.scrollHeight;
+				img.style.maxWidth = "60%";
+				img.style.height = "60%";
+				img.style.borderRadius = "10px";
+				img.style.marginTop = "5px";
+
             };
 
             img.onerror = () => {
