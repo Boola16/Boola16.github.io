@@ -158,30 +158,47 @@
 
 	// --- UNSPLASH WORKING IMAGE GENERATOR ---
 	function addStockImage(prompt) {
-		if (!prompt) return;
+    if (!prompt) return;
 
-		const placeholder = document.createElement("div");
-		placeholder.textContent = "Loading image...";
-		placeholder.style.color = "#aaa";
-		messagesEl.appendChild(placeholder);
+    const placeholder = document.createElement("div");
+    placeholder.textContent = "Loading image...";
+    placeholder.style.color = "#aaa";
+    messagesEl.appendChild(placeholder);
 
-		const img = new Image();
-		img.src = `https://source.unsplash.com/featured/?${encodeURIComponent(prompt)}`;
-		img.style.maxWidth = "100%";
-		img.style.borderRadius = "10px";
-		img.style.marginTop = "5px";
+    const API_KEY = "53550570-4506818d5990869df7d597f9a"; // ← put your real key here
+    const url = `https://pixabay.com/api/?key=${API_KEY}&q=${encodeURIComponent(prompt)}&image_type=photo&per_page=3`;
 
-		img.onload = () => {
-			messagesEl.removeChild(placeholder);
-			messagesEl.appendChild(img);
-			messagesEl.scrollTop = messagesEl.scrollHeight;
-		};
+    fetch(url)
+        .then(res => res.json())
+        .then(data => {
+            messagesEl.removeChild(placeholder);
 
-		img.onerror = () => {
-			messagesEl.removeChild(placeholder);
-			addMsg("bot", "Image failed to load.");
-		};
-	}
+            if (!data.hits || data.hits.length === 0) {
+                addMsg("bot", "No images found.");
+                return;
+            }
+
+            const img = new Image();
+            img.src = data.hits[0].webformatURL;
+            img.style.maxWidth = "100%";
+            img.style.borderRadius = "10px";
+            img.style.marginTop = "5px";
+
+            img.onload = () => {
+                messagesEl.appendChild(img);
+                messagesEl.scrollTop = messagesEl.scrollHeight;
+            };
+
+            img.onerror = () => {
+                addMsg("bot", "Image failed to load.");
+            };
+        })
+        .catch(() => {
+            messagesEl.removeChild(placeholder);
+            addMsg("bot", "Error loading image.");
+        });
+}
+
 
 	function getReply(text) {
 		const lower = text.toLowerCase();
