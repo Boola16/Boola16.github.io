@@ -238,7 +238,8 @@
 		{ mode: "any", triggers: ["bored"], reply: "Let's fix that! Ask me something fun." },
 		{ mode: "any", triggers: ["do you know me"], reply: "A little, but I’d love to know more." },
 		{ mode: "any", triggers: ["what do you want"], reply: "Just good vibes." },
-		{ mode: "any", triggers: ["im confused"], reply: "Want to explain? I can help." }
+		{ mode: "any", triggers: ["confused"], reply: "Want to explain? I can help." },
+		{ mode: "any", triggers: ["cool","awesome","sick"], exclude: ["not", "isn't"], reply: "I know right! Sick!" }
 	];
 
 	function getDayOfWeek() {
@@ -307,23 +308,37 @@
 
 
 	function getReply(text) {
-		const lower = text.toLowerCase();
-		const replies = [];
+    const lower = text.toLowerCase();
+    const replies = [];
 
-		for (const r of responses) {
-			const match = r.mode === "any"
-				? r.triggers.some(t => lower.includes(t))
-				: r.triggers.every(t => lower.includes(t));
+    for (const r of responses) {
 
-			if (match) {
-				replies.push(
-					r.reply
-						.replace("{day}", getDayOfWeek())
-						.replace("{date}", getDate())
-						.replace("{time}", getTime())
-				);
-			}
-		}
+        // --- new: check exclusions ---
+        if (r.exclude && r.exclude.some(ex => lower.includes(ex))) {
+            continue; // skip this reply
+        }
+
+        // --- normal matching logic ---
+        const match =
+            r.mode === "any"
+                ? r.triggers.some(t => lower.includes(t))
+                : r.triggers.every(t => lower.includes(t));
+
+        if (match) {
+            replies.push(
+                r.reply
+                    .replace("{day}", getDayOfWeek())
+                    .replace("{date}", getDate())
+                    .replace("{time}", getTime())
+            );
+        }
+    }
+
+    return replies.length
+        ? replies.join("\n")
+        : "Sorry, I don't understand that yet.";
+}
+
 
 		return replies.length ? replies.join("\n") : "Sorry, I don't understand that yet.";
 	}
