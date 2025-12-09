@@ -217,7 +217,7 @@
 		{ mode: "any", triggers: ["yo"], reply: "Yo!" },
 		{ mode: "any", triggers: ["hey there"], reply: "Heyyy!" },
 		{ mode: "any", triggers: ["nah"], reply: "Alright, fair enough." },
-		{ mode: "any", triggers: ["fr"], reply: "Fr fr." },
+		{ mode: "any", triggers: ["fr"], exclude: ["francis"], reply: "Fr fr." },
 		{ mode: "any", triggers: ["awesome"], reply: "Right? Super awesome." },
 		{ mode: "any", triggers: ["do you like me"], reply: "Of course! You're fun to chat with." },
 		{ mode: "any", triggers: ["who am i"], reply: "You're you — and that's pretty great." },
@@ -242,6 +242,8 @@
 		{ mode: "any", triggers: ["cool","awesome","sick"], exclude: ["not", "isn't"], reply: "I know right! Sick!" },
 		{ mode: "all", triggers: ["not","cool"], reply: "Totally agree. Not cool at all." },
 		{ mode: "any", triggers: ["potatoes"], reply: "I LOVE POTATOES BABYYYYY!" },
+		{ mode: "any", triggers: ["francis"], reply: "Francis made Delphi-3 with Thomas." },
+		{ mode: "any", triggers: ["thomas"], reply: "Thomas made Delphi-3 with Francis." },
 	];
 
 	function getDayOfWeek() {
